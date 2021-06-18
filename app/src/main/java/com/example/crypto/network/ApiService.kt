@@ -11,7 +11,6 @@ interface ApiService {
     //https://pro.coinmarketcap.com/api/v1#section/Quick-Start-Guide
     @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")
     @GET("v1/cryptocurrency/listings/latest?")
-    suspend fun getCryptoList(
-        @Query("limit") page: String = "20",
-    ): Response<CryptoList>
+    suspend fun getCryptoList(@Query("start") start: String  ,@Query("limit") limit: String = "20" )
+    : Response<CryptoList>
 }

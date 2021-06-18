@@ -7,10 +7,10 @@ data class CryptoList(
 
     @SerializedName("status")
     @Expose
-    private var status: Status? = null,
+    var status: Status? = null,
 
     @SerializedName("data")
     @Expose
-    private var data: MutableList<Data?>? = null
+    var data: MutableList<Data>? = null
 ) {
 }
