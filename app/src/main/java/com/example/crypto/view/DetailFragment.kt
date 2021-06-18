@@ -1,4 +1,4 @@
-package com.example.crypto
+package com.example.crypto.view
 
 import android.os.Bundle
 
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.crypto.R
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.

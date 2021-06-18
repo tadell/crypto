@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 data class CryptoList(
 
-    @SerializedName("status") @Expose
+    @SerializedName("status")
+    @Expose
     private var status: Status? = null,
 
     @SerializedName("data")
