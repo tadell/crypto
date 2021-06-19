@@ -3,11 +3,12 @@ package com.example.crypto.repository
 
 import androidx.paging.PagingSource
 import com.example.crypto.model.Data
+import com.example.crypto.network.ApiClient
 import com.example.crypto.network.ApiService
 
 
-class CryptoRepository(private val apiService: ApiService) : PagingSource<Int, Data>() {
-
+class CryptoRepository() : PagingSource<Int, Data>() {
+    private val apiService = ApiClient.getClient().create(ApiService::class.java)
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
         try {
             val currentLoadingPageKey = params.key ?: 1

@@ -5,12 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 data class Data(
     @SerializedName("id")
-    @Expose
-    private var id: Int? = null,
+    @Expose var id: Int? = null,
 
     @SerializedName("name")
-    @Expose
-    private val name: String? = null,
+    @Expose val name: String? = null,
 
     @SerializedName("symbol")
     @Expose
