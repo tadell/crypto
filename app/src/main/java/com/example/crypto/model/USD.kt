@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class USD(
     @SerializedName("price")
-    @Expose
-    private var price: Double? = null,
+    @Expose var price: Double? = null,
 
     @SerializedName("volume_24h")
     @Expose
@@ -17,16 +16,14 @@ data class USD(
     private val percentChange1h: Double? = null,
 
     @SerializedName("percent_change_24h")
-    @Expose
-    private val percentChange24h: Double? = null,
+    @Expose val percentChange24h: Double? = null,
 
     @SerializedName("percent_change_7d")
     @Expose
     private val percentChange7d: Double? = null,
 
     @SerializedName("market_cap")
-    @Expose
-    private val marketCap: Double? = null,
+    @Expose val marketCap: Double? = null,
 
     @SerializedName("last_updated")
     @Expose

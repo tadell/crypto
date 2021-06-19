@@ -11,8 +11,7 @@ data class Data(
     @Expose val name: String? = null,
 
     @SerializedName("symbol")
-    @Expose
-    private val symbol: String? = null,
+    @Expose val symbol: String? = null,
 
     @SerializedName("slug")
     @Expose
@@ -47,6 +46,5 @@ data class Data(
     private val lastUpdated: String? = null,
 
     @SerializedName("quote")
-    @Expose
-    private var quote: Quote? = null
+    @Expose var quote: Quote? = null
 )

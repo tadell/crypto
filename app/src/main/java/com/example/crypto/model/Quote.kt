@@ -5,6 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class Quote(
     @SerializedName("USD")
-    @Expose
-    private var uSD: USD? = null
+    @Expose var usd: USD? = null
 ) {}

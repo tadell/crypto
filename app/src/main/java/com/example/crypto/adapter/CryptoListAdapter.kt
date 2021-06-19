@@ -1,6 +1,7 @@
 package com.example.crypto.adapter
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crypto.databinding.ItemCryptoBinding
 import com.example.crypto.model.Data
+import java.text.NumberFormat
+import java.util.*
 
 
 class CryptoListAdapter :
     PagingDataAdapter<Data, CryptoListAdapter.MyViewHolder>(DataDifferntiator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_crypto, parent, false)
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCryptoBinding.inflate(inflater)
         return MyViewHolder(binding)
@@ -24,14 +26,23 @@ class CryptoListAdapter :
         getItem(position)?.let { holder.bind(it) }
     }
 
-    class MyViewHolder(val binding: ItemCryptoBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: ItemCryptoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: Data) {
             binding.item = item
-            binding.textViewName.text = item.name
+            binding.name.text = item.name
+            binding.symbol.text = item.symbol
+            binding.price.text = "Price : $" + String.format("%,f", item.quote?.usd?.price)
+            binding.percentChange24h.text = "Percent Change 24h : $" +
+                    String.format("%,f", item.quote?.usd?.percentChange24h)
+            binding.marketCap.text = "Market Cap : $" +
+                    String.format(
+                        "%,f", item.quote?.usd?.marketCap
+                    )
             binding.executePendingBindings()
         }
     }
-
 
     object DataDifferntiator : DiffUtil.ItemCallback<Data>() {
 
