@@ -39,7 +39,7 @@ class DetailFragment : Fragment() {
         setupView()
 //        view.findViewById<Button>(R.id.button_second).setOnClickListener {
 //            findNavController().navigate(R.id.action_DetailFragment_to_ListFragment)
-//        }
+////        }
     }
 
     private fun setupView() {

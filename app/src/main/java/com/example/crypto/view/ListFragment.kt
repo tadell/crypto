@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crypto.R
 import com.example.crypto.adapter.CryptoListAdapter
@@ -53,11 +54,17 @@ class ListFragment : Fragment() {
     }
 
     private fun setupList() {
-        cryptoListAdapter = CryptoListAdapter()
+        cryptoListAdapter = CryptoListAdapter(object : CryptoListAdapter.SetOnCryptoClick {
+            override fun onCryptoClick(id: Int) {
+                val bundle = Bundle()
+                bundle.putSerializable("id", id)
+                findNavController().navigate(R.id.action_ListFragment_to_DetailFragment, bundle)
+            }
+        })
         linearLayoutManager = LinearLayoutManager(context)
 
         binding.lifecycleOwner = this
-        binding.rvCryptoList .adapter = cryptoListAdapter
+        binding.rvCryptoList.adapter = cryptoListAdapter
         binding.rvCryptoList.layoutManager = linearLayoutManager
     }
 

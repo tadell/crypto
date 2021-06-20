@@ -3,6 +3,7 @@ package com.example.crypto.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,7 @@ import java.text.NumberFormat
 import java.util.*
 
 
-class CryptoListAdapter :
+class CryptoListAdapter(val setOnCryptoClick: SetOnCryptoClick) :
     PagingDataAdapter<Data, CryptoListAdapter.MyViewHolder>(DataDifferntiator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,6 +24,7 @@ class CryptoListAdapter :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        setOnCryptoClickListener = setOnCryptoClick
         getItem(position)?.let { holder.bind(it) }
     }
 
@@ -40,6 +42,12 @@ class CryptoListAdapter :
                     String.format(
                         "%,f", item.quote?.usd?.marketCap
                     )
+
+            binding.cardCrypto.setOnClickListener(View.OnClickListener{ item.id?.toInt()?.let { it1 ->
+                setOnCryptoClickListener?.onCryptoClick(
+                    it1
+                )
+            } })
             binding.executePendingBindings()
         }
     }
@@ -53,5 +61,11 @@ class CryptoListAdapter :
         override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
             return oldItem == newItem
         }
+    }
+    companion object {
+        var setOnCryptoClickListener: SetOnCryptoClick? = null
+    }
+    interface SetOnCryptoClick {
+        fun onCryptoClick(id: Int)
     }
 }
