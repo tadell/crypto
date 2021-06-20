@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/fab_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_string" />
+
+    <TextView
+        android:layout_margin="@dimen/margin_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cryptocurrency_type_string" />
+
+    <RadioGroup
+        android:id="@+id/rg_crypto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8">
+
+        <RadioButton
+            android:id="@+id/rb_crypto_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_default_string" />
+
+        <RadioButton
+            android:id="@+id/rb_crypto_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coins_string" />
+
+        <RadioButton
+            android:id="@+id/rb_crypto_tokens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tokens_string" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_margin="@dimen/margin_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tag_string" />
+
+    <RadioGroup
+        android:id="@+id/rg_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8">
+
+        <RadioButton
+            android:id="@+id/rb_tag_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_default_string" />
+
+        <RadioButton
+            android:id="@+id/rb_tag_defi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defi_string" />
+
+        <RadioButton
+            android:id="@+id/rb_tag_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/file_sharing_string" />
+
+    </RadioGroup>
+</LinearLayout>

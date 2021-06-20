@@ -16,5 +16,13 @@
     <string name="price_asc_string">price (asc)</string>
     <string name="price_desc_string">price (desc)</string>
     <string name="sort_by_string">Sort by:</string>
+    <string name="filter_string">Filter:</string>
+    <string name="cryptocurrency_type_string">Cryptocurrency type:</string>
+    <string name="file_sharing_string">file sharing</string>
+    <string name="defi_string">defi</string>
+    <string name="all_default_string">all (default)</string>
+    <string name="tokens_string">tokens</string>
+    <string name="coins_string">coins</string>
+    <string name="tag_string">tag:</string>
 
 </resources>
