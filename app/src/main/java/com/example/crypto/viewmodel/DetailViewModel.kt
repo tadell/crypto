@@ -12,7 +12,8 @@ class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
     fun getDetails() {
         launch(Dispatchers.Main) {
             try {
-                val detailData = DetailRepository().load(id = 1)
+                DetailRepository().load(id = 1)
+                return@launch
             } catch (exception: Exception) {
                 exception.message?.let {
                 }
