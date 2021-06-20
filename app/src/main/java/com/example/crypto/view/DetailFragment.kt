@@ -1,21 +1,22 @@
 package com.example.crypto.view
 
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.crypto.R
 import com.example.crypto.databinding.FragmentDetailBinding
 import com.example.crypto.viewmodel.DetailViewModel
-import kotlinx.coroutines.flow.collect
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.coroutines.CoroutineContext
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -36,16 +37,33 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView()
+
+        if (arguments != null) {
+            val id = requireArguments().getInt("id")
+            getDetailData(id)
+            setupView()
+
+        }
+
 //        view.findViewById<Button>(R.id.button_second).setOnClickListener {
 //            findNavController().navigate(R.id.action_DetailFragment_to_ListFragment)
 ////        }
     }
 
-    private fun setupView() {
-        lifecycleScope.launch {
-            detailViewModel.getDetails()
+    private fun getDetailData(id: Int) {
+        lifecycleScope.launch() {
+            detailViewModel.getDetails(id)
         }
     }
 
+    private fun setupView() {
+
+        detailViewModel.detailData.observe(viewLifecycleOwner) {
+            binding.name.text = it.name
+            binding.symbol.text = it.symbol
+            binding.description.text = it.description
+            Picasso.get().load(it.logo).into(binding.imgLogo)
+
+        }
+    }
 }

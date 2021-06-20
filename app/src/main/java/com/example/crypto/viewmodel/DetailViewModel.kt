@@ -1,23 +1,44 @@
 package com.example.crypto.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.crypto.model.InfoData
 import com.example.crypto.repository.DetailRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
+    val detailData = MutableLiveData<InfoData>()
+    var job: Job? = null
+    val loading = MutableLiveData<Boolean>()
 
-    fun getDetails() {
-        launch(Dispatchers.Main) {
-            try {
-                DetailRepository().load(id = 1)
-                return@launch
-            } catch (exception: Exception) {
-                exception.message?.let {
+
+    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        onError("Exception handled: ${throwable.localizedMessage}")
+    }
+
+    fun getDetails(id: Int) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = DetailRepository().load(id)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val data = response.body()?.data?.get(id.toString())
+                    detailData.postValue(response.body()?.data?.get(id.toString()))
+                    loading.value = false
+
+                } else {
+                    onError("Error : ${response.message()} ")
                 }
             }
         }
+
+    }
+
+    private fun onError(message: String) {
+        loading.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }

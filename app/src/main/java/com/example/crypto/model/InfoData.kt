@@ -1,5 +1,6 @@
 package com.example.crypto.model
 
+import android.net.Uri
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -19,10 +20,8 @@ data class InfoData(
     private val slug: String? = null,
 
     @SerializedName("logo")
-    @Expose
-    private val logo: String? = null,
+    @Expose val logo: String? = null,
 
     @SerializedName("description")
-    @Expose
-    private val description: String? = null
+    @Expose val description: String? = null
 )

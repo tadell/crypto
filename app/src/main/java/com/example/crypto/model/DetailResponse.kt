@@ -3,7 +3,7 @@ package com.example.crypto.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class DetailList(
+data class DetailResponse(
 
     @SerializedName("status")
     @Expose
@@ -11,6 +11,6 @@ data class DetailList(
 
     @SerializedName("data")
     @Expose
-    var data: MutableList<InfoData>? = null
+    var data:  Map<String, InfoData>
 ) {
 }
