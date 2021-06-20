@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/fab_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_string" />
+
+    <RadioGroup
+        android:layout_margin="@dimen/margin_8"
+        android:id="@+id/rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_market_asc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/market_cap_asc_string" />
+
+        <RadioButton
+            android:id="@+id/rb_market_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/market_cap_desc_string" />
+
+        <RadioButton
+            android:id="@+id/rb_name_asc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_asc_string" />
+
+        <RadioButton
+            android:id="@+id/rb_name_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_desc_string" />
+
+        <RadioButton
+            android:id="@+id/rb_price_asc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price_asc_string" />
+
+        <RadioButton
+            android:id="@+id/rb_price_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price_desc_string" />
+    </RadioGroup>
+</LinearLayout>
