@@ -4,21 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="crypto"
             type="com.example.crypto.viewmodel.CryptoListViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:background="@color/teal_700"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".view.ListFragment">
 
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          >
+
+            <ImageButton
+                android:id="@+id/imgbtn_sort_dir"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:src="@mipmap/ic_launcher" />
+
+            <Button
+                android:id="@+id/btn_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_toEndOf="@id/imgbtn_sort_dir"
+                android:text="@string/sort_string" />
+
+            <Button
+                android:id="@+id/btn_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="@string/filter_string" />
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_crypto_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/rl_top"
+            android:layout_marginTop="@dimen/margin_8"
             android:scrollbars="vertical" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </layout>
