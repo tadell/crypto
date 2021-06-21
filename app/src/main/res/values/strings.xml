@@ -9,12 +9,9 @@
     <string name="string_price_24h">Price 24H : $</string>
     <string name="string_percent_change_24h">Percent Change 24h: $</string>
     <string name="string_market_cap">Market Cap: $ </string>
-    <string name="market_cap_asc_string">market cap (asc)</string>
-    <string name="market_cap_desc_string">market cap (desc)</string>
-    <string name="name_asc_string">name (asc)</string>
-    <string name="name_desc_string">name (desc)</string>
-    <string name="price_asc_string">price (asc)</string>
-    <string name="price_desc_string">price (desc)</string>
+    <string name="market_cap_asc_string">market cap</string>
+    <string name="name_asc_string">name</string>
+    <string name="price_asc_string">price</string>
     <string name="sort_by_string">Sort by:</string>
     <string name="filter_string">Filter:</string>
     <string name="cryptocurrency_type_string">Cryptocurrency type:</string>

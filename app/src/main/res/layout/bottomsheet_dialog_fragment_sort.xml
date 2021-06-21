@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/fab_margin">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sort_by_string" />
+    <data>
+        <variable
+            name="item"
+            type="com.example.crypto.viewmodel.CryptoListViewModel" />
+    </data>
 
-    <RadioGroup
-        android:layout_margin="@dimen/margin_8"
-        android:id="@+id/rg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rb_market_asc"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/market_cap_asc_string" />
+            android:text="@string/sort_by_string" />
 
-        <RadioButton
-            android:id="@+id/rb_market_desc"
+        <RadioGroup
+            android:id="@+id/rg_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/market_cap_desc_string" />
+            android:layout_margin="@dimen/margin_8">
 
-        <RadioButton
-            android:id="@+id/rb_name_asc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_asc_string" />
+            <RadioButton
+                android:id="@+id/rb_market"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/market_cap_asc_string" />
 
-        <RadioButton
-            android:id="@+id/rb_name_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_desc_string" />
+            <RadioButton
+                android:id="@+id/rb_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_asc_string" />
 
-        <RadioButton
-            android:id="@+id/rb_price_asc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/price_asc_string" />
 
-        <RadioButton
-            android:id="@+id/rb_price_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/price_desc_string" />
-    </RadioGroup>
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/rb_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_asc_string" />
+
+
+        </RadioGroup>
+    </LinearLayout>
+</layout>
