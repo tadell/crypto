@@ -17,6 +17,7 @@
         tools:context=".view.cryptoList.ListFragment">
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/margin_8"
             android:id="@+id/rl_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/fab_margin"
-                android:src="@mipmap/ic_launcher" />
+                android:background="@drawable/sort_asc" />
 
             <Button
                 android:id="@+id/btn_sort"

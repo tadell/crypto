@@ -40,6 +40,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private var sortCheckedId = 0
     private var cryptoCheckedId = 0
     private var tagCheckedId = 0
+    private var isDirAsc = true
 
     override fun layout(): Int = R.layout.fragment_list
 
@@ -54,6 +55,20 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private fun setupOnCLicks() {
         binding.btnSort.setOnClickListener { showSortBottomSheetDialog() }
         binding.btnFilter.setOnClickListener { showFilterBottomSheetDialog() }
+        binding.imgbtnSortDir.setOnClickListener { setSortDirBtn() }
+    }
+
+    private fun setSortDirBtn() {
+        if (isDirAsc) {
+            binding.imgbtnSortDir.setBackgroundResource(R.drawable.sort_dsc)
+            isDirAsc = false
+            sortDirText = SortDirection.DESC.toString().toLowerCase(Locale.ROOT)
+        } else {
+            binding.imgbtnSortDir.setBackgroundResource(R.drawable.sort_asc)
+            isDirAsc = true
+            sortDirText = SortDirection.ASC.toString().toLowerCase(Locale.ROOT)
+        }
+        setupView()
     }
 
     private fun showSortBottomSheetDialog() {
