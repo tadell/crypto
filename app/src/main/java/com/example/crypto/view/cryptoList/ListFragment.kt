@@ -33,14 +33,14 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private var sort: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var sortText: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
-    private var sortDirText: String = SortDirection.ASC.toString().toLowerCase(Locale.ROOT)
+    private var sortDirText: String = SortDirection.DESC.toString().toLowerCase(Locale.ROOT)
     private var cryptoTypeText: String = CryptoType.ALL.toString().toLowerCase(Locale.ROOT)
     private var tagText: String = TagType.ALL.toString().toLowerCase(Locale.ROOT)
     private var bottomSheetDialog: BottomSheetDialog? = null
     private var sortCheckedId = 0
     private var cryptoCheckedId = 0
     private var tagCheckedId = 0
-    private var isDirAsc = true
+    private var isDirAsc = false
 
     override fun layout(): Int = R.layout.fragment_list
 
