@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="item"
-            type="com.example.crypto.viewmodel.CryptoListViewModel" />
+            name="viewModel"
+            type="com.example.crypto.view.cryptoList.CryptoListViewModel" />
     </data>
 
     <LinearLayout

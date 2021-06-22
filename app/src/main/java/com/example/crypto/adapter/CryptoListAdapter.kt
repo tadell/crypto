@@ -14,7 +14,7 @@ import java.text.NumberFormat
 import java.util.*
 
 
-class CryptoListAdapter(val setOnCryptoClick: SetOnCryptoClick) :
+class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
     PagingDataAdapter<Data, CryptoListAdapter.MyViewHolder>(DataDifferntiator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

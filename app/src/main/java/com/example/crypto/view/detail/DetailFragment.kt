@@ -1,4 +1,4 @@
-package com.example.crypto.view
+package com.example.crypto.view.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.crypto.R
 import com.example.crypto.databinding.FragmentDetailBinding
-import com.example.crypto.viewmodel.DetailViewModel
+import com.example.crypto.view.detail.DetailViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.coroutines.CoroutineContext
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.

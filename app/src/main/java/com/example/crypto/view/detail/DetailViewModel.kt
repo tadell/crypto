@@ -1,4 +1,4 @@
-package com.example.crypto.viewmodel
+package com.example.crypto.view.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

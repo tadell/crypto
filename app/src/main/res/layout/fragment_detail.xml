@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.crypto.viewmodel.DetailViewModel" />
+            type="com.example.crypto.view.detail.DetailViewModel" />
     </data>
 
 

@@ -1,15 +1,17 @@
 package com.example.crypto.repository
 
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import com.example.crypto.model.Data
 import com.example.crypto.model.enums.SortType
 import com.example.crypto.network.ApiClient
 import com.example.crypto.network.ApiService
 
 
-class CryptoRepository() : PagingSource<Int, Data>() {
+class CryptoListPagingSource(private val sort_text: String) : PagingSource<Int, Data>() {
+    var responseData = mutableListOf<Data>()
+    var listData = MutableLiveData<List<Data>>()
     private val apiService = ApiClient.getClient().create(ApiService::class.java)
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
         try {
@@ -17,9 +19,9 @@ class CryptoRepository() : PagingSource<Int, Data>() {
             val response = apiService.getCryptoList(
                 currentLoadingPageKey.toString(),
                 "20",
-                SortType.MARKET_CAP.sort
+                sort_text
             )
-            val responseData = mutableListOf<Data>()
+            responseData = mutableListOf<Data>()
             val data = response.body()?.data ?: emptyList()
             responseData.addAll(data)
 
