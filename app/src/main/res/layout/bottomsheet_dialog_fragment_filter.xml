@@ -11,9 +11,9 @@
         android:text="@string/filter_string" />
 
     <TextView
-        android:layout_margin="@dimen/margin_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8"
         android:text="@string/cryptocurrency_type_string" />
 
     <RadioGroup
@@ -26,6 +26,7 @@
             android:id="@+id/rb_crypto_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/all_default_string" />
 
         <RadioButton
@@ -43,9 +44,9 @@
     </RadioGroup>
 
     <TextView
-        android:layout_margin="@dimen/margin_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8"
         android:text="@string/tag_string" />
 
     <RadioGroup
@@ -58,6 +59,7 @@
             android:id="@+id/rb_tag_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/all_default_string" />
 
         <RadioButton

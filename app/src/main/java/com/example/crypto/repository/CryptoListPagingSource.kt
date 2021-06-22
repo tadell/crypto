@@ -9,7 +9,12 @@ import com.example.crypto.network.ApiClient
 import com.example.crypto.network.ApiService
 
 
-class CryptoListPagingSource(private val sort_text: String) : PagingSource<Int, Data>() {
+class CryptoListPagingSource(
+    private val sortText: String,
+    private val sortDesc: String,
+    private val cryptoText: String,
+    private val tagText: String
+) : PagingSource<Int, Data>() {
     var responseData = mutableListOf<Data>()
     var listData = MutableLiveData<List<Data>>()
     private val apiService = ApiClient.getClient().create(ApiService::class.java)
@@ -19,7 +24,10 @@ class CryptoListPagingSource(private val sort_text: String) : PagingSource<Int, 
             val response = apiService.getCryptoList(
                 currentLoadingPageKey.toString(),
                 "20",
-                sort_text
+                sortText,
+                sortDesc,
+                cryptoText,
+                tagText
             )
             responseData = mutableListOf<Data>()
             val data = response.body()?.data ?: emptyList()

@@ -13,10 +13,17 @@ interface ApiService {
 //    @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")//own
     @Headers("X-CMC_PRO_API_KEY: 3069b872-06b0-40f1-bf44-5a3f7f73d796")
     @GET("v1/cryptocurrency/listings/latest?")
-    suspend fun getCryptoList(@Query("start") start: String, @Query("limit") limit: String, @Query("sort") sort: String)
+    suspend fun getCryptoList(
+        @Query("start") start: String,
+        @Query("limit") limit: String,
+        @Query("sort") sort: String,
+        @Query("sort_dir") sort_dir: String,
+        @Query("cryptocurrency_type") cryptocurrency_type: String,
+        @Query("tag") tag: String
+    )
             : Response<CryptoList>
 
-//    @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")
+    //    @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")
     @Headers("X-CMC_PRO_API_KEY: 3069b872-06b0-40f1-bf44-5a3f7f73d796")
     @GET("v1/cryptocurrency/info?")
     suspend fun getCryptoInfoDetail(@Query("id") id: String)

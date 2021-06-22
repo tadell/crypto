@@ -13,8 +13,8 @@ open class CryptoListViewModel(private val repository: CryptoListRepository) : B
 
     private val _cryptoList = MutableLiveData<PagingData<Data>?>()
 
-    suspend fun getCryptoList(sortText: String): LiveData<PagingData<Data>> {
-        val response = repository.getCryptoList(sortText).cachedIn(viewModelScope)
+    suspend fun getCryptoList(sortText: String,sortDesc: String,cryptoText: String,tagText: String): LiveData<PagingData<Data>> {
+        val response = repository.getCryptoList(sortText,sortDesc,cryptoText,tagText).cachedIn(viewModelScope)
         _cryptoList.value = null
         _cryptoList.value = response.value
         return response

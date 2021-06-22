@@ -8,11 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.crypto.AppController.Companion.public_crypto_text
 import com.example.crypto.AppController.Companion.public_sort_text
+import com.example.crypto.AppController.Companion.public_tag_text
 import com.example.crypto.R
 import com.example.crypto.adapter.CryptoListAdapter
 import com.example.crypto.databinding.FragmentListBinding
+import com.example.crypto.model.enums.CryptoType
+import com.example.crypto.model.enums.SortDirection
 import com.example.crypto.model.enums.SortType
+import com.example.crypto.model.enums.TagType
 import com.example.crypto.view.base.BaseFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
@@ -23,12 +28,18 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
- class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
+class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     lateinit var cryptoListAdapter: CryptoListAdapter
     private var sort: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private var sortText: String = SortType.MARKET_CAP.toString().toLowerCase()
+    private var sortText: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
+    private var sortDirText: String = SortDirection.ASC.toString().toLowerCase(Locale.ROOT)
+    private var cryptoTypeText: String = CryptoType.ALL.toString().toLowerCase(Locale.ROOT)
+    private var tagText: String = TagType.ALL.toString().toLowerCase(Locale.ROOT)
     private var bottomSheetDialog: BottomSheetDialog? = null
+    private var sortCheckedId = 0
+    private var cryptoCheckedId = 0
+    private var tagCheckedId = 0
 
     override fun layout(): Int = R.layout.fragment_list
 
@@ -38,23 +49,14 @@ import java.util.*
         setupList()
         setupView()
     }
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        // Inflate the layout for this fragment
-//        binding =
-//            DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
-//
-//        return binding.root
-//    }
 
 
     private fun setupOnCLicks() {
-        binding.btnSort.setOnClickListener { showBottomSheetDialog() }
+        binding.btnSort.setOnClickListener { showSortBottomSheetDialog() }
+        binding.btnFilter.setOnClickListener { showFilterBottomSheetDialog() }
     }
 
-    private fun showBottomSheetDialog() {
+    private fun showSortBottomSheetDialog() {
         bottomSheetDialog = context?.let { BottomSheetDialog(it) }
         bottomSheetDialog?.setContentView(R.layout.bottomsheet_dialog_fragment_sort)
         val sortRadioGroup = bottomSheetDialog?.findViewById<LinearLayout>(R.id.rg_sort)
@@ -70,10 +72,30 @@ import java.util.*
         bottomSheetDialog?.show()
     }
 
-    private fun setupSortRadioGroupClick(view: BottomSheetDialog?, sortRadioGroup: RadioGroup) {
-        sortRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-            val selectedRadioButton = view?.findViewById<RadioButton>(checkedId)
+    private fun showFilterBottomSheetDialog() {
+        bottomSheetDialog = context?.let { BottomSheetDialog(it) }
+        bottomSheetDialog?.setContentView(R.layout.bottomsheet_dialog_fragment_filter)
+        val cryptoRadioGroup = bottomSheetDialog?.findViewById<LinearLayout>(R.id.rg_crypto)
+        val tagRadioGroup = bottomSheetDialog?.findViewById<LinearLayout>(R.id.rg_tag)
+        setupCryptoRadioGroupClick(bottomSheetDialog, (cryptoRadioGroup as RadioGroup))
+        setupTagRadioGroupClick(bottomSheetDialog, (tagRadioGroup as RadioGroup))
 
+        bottomSheetDialog?.setOnDismissListener {
+            if (public_tag_text != tagText || public_crypto_text != cryptoTypeText) {
+                public_tag_text = tagText
+                public_crypto_text = cryptoTypeText
+                setupView()
+                cryptoListAdapter.notifyDataSetChanged()
+            }
+        }
+        bottomSheetDialog?.show()
+    }
+
+    private fun setupSortRadioGroupClick(view: BottomSheetDialog?, radioGroup: RadioGroup) {
+        if (sortCheckedId != 0)
+            radioGroup.check(sortCheckedId)
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            val selectedRadioButton = view?.findViewById<RadioButton>(checkedId)
             when (selectedRadioButton?.text.toString()) {
                 SortType.MARKET_CAP.sort -> sortText =
                     SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
@@ -82,23 +104,51 @@ import java.util.*
                 SortType.PRICE.sort -> sortText =
                     SortType.PRICE.toString().toLowerCase(Locale.ROOT)
             }
+            sortCheckedId = checkedId
         }
     }
 
-    private fun setupView(sortText: String) {
-//        cryptoListViewModel.sort_text = sortText
-//        lifecycleScope.launch {
-//            cryptoListViewModel.listData.collect {
-//                cryptoListAdapter.submitData(it)
-//            }
-//        }
+    private fun setupCryptoRadioGroupClick(view: BottomSheetDialog?, radioGroup: RadioGroup) {
+        if (cryptoCheckedId != 0)
+            radioGroup.check(cryptoCheckedId)
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            val selectedRadioButton = view?.findViewById<RadioButton>(checkedId)
+            when (selectedRadioButton?.text.toString()) {
+                CryptoType.ALL.crypto -> cryptoTypeText =
+                    CryptoType.ALL.toString().toLowerCase(Locale.ROOT)
+                CryptoType.COINS.crypto -> cryptoTypeText =
+                    CryptoType.COINS.toString().toLowerCase(Locale.ROOT)
+                CryptoType.TOKENS.crypto -> cryptoTypeText =
+                    CryptoType.TOKENS.toString().toLowerCase(Locale.ROOT)
+            }
+            cryptoCheckedId = checkedId
+        }
     }
+
+    private fun setupTagRadioGroupClick(view: BottomSheetDialog?, radioGroup: RadioGroup) {
+        if (tagCheckedId != 0)
+            radioGroup.check(tagCheckedId)
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            val selectedRadioButton = view?.findViewById<RadioButton>(checkedId)
+            when (selectedRadioButton?.text.toString()) {
+                TagType.ALL.tag -> tagText =
+                    TagType.ALL.toString().toLowerCase(Locale.ROOT)
+                TagType.DEFI.tag -> tagText =
+                    TagType.DEFI.toString().toLowerCase(Locale.ROOT)
+                TagType.FILESHARING.tag -> tagText =
+                    TagType.FILESHARING.toString().toLowerCase(Locale.ROOT)
+            }
+            tagCheckedId = checkedId
+        }
+    }
+
 
     private fun setupView() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getCryptoList(sortText).observe(viewLifecycleOwner, {
-                cryptoListAdapter.submitData(lifecycle, it)
-            })
+            viewModel.getCryptoList(sortText, sortDirText, cryptoTypeText, tagText)
+                .observe(viewLifecycleOwner, {
+                    cryptoListAdapter.submitData(lifecycle, it)
+                })
         }
     }
 
