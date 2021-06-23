@@ -42,13 +42,16 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private var tagCheckedId = 0
     private var isDirAsc = false
 
+
     override fun layout(): Int = R.layout.fragment_list
+
 
     override val viewModel: CryptoListViewModel by viewModel()
     override fun init() {
         setupOnCLicks()
         setupList()
         setupView()
+
     }
 
 
@@ -160,11 +163,15 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
 
     private fun setupView() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getCryptoList(sortText, sortDirText, cryptoTypeText, tagText)
-                .observe(viewLifecycleOwner, {
-                    cryptoListAdapter.submitData(lifecycle, it)
-                })
+            this@ListFragment.context?.let {
+                viewModel.getCryptoList(it,sortText, sortDirText, cryptoTypeText, tagText)
+                    .observe(viewLifecycleOwner, {
+                        cryptoListAdapter.submitData(lifecycle, it)
+                    })
+            }
         }
+
+
     }
 
     private fun setupList() {

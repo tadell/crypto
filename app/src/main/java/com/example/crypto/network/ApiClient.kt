@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Headers
 import java.util.concurrent.TimeUnit
 
 class ApiClient {
@@ -14,18 +13,21 @@ class ApiClient {
         private val loggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY
         }
-        private val okHttpClient = OkHttpClient().newBuilder()
-            .connectTimeout(2, TimeUnit.MINUTES)
-            .readTimeout(2, TimeUnit.MINUTES)
-            .writeTimeout(2, TimeUnit.MINUTES)
+
+        private fun OkHttpClient.Builder.setApiKey() = addInterceptor { chain ->
+            val request = chain.request().newBuilder()
+                .header("Accept", "application/json")
+                .addHeader("X-CMC_PRO_API_KEY", "aec338c7-932e-464d-be06-a062bf0b4e8")
+            chain.proceed(request.build())
+        }
+
+        private val okHttpClient = OkHttpClient.Builder()
+            .setApiKey()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .header("Accept", "application/json")
-                    .addHeader("X-CMC_PRO_API_KEY", "3069b872-06b0-40f1-bf44-5a3f7f73d796")
-                chain.proceed(request.build())
-            }
             .build()
 
         var retrofit: Retrofit? = null
@@ -42,5 +44,6 @@ class ApiClient {
             return retrofit as Retrofit
         }
     }
+
 
 }

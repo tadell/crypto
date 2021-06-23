@@ -11,7 +11,6 @@ class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
     var job: Job? = null
     val loading = MutableLiveData<Boolean>()
 
-
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
@@ -21,7 +20,6 @@ class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
             val response = DetailRepository().load(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    val data = response.body()?.data?.get(id.toString())
                     detailData.postValue(response.body()?.data?.get(id.toString()))
                     loading.value = false
 
@@ -30,7 +28,6 @@ class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
                 }
             }
         }
-
     }
 
     private fun onError(message: String) {

@@ -41,9 +41,6 @@ class DetailFragment : Fragment() {
 
         }
 
-//        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-//            findNavController().navigate(R.id.action_DetailFragment_to_ListFragment)
-////        }
     }
 
     private fun getDetailData(id: Int) {
