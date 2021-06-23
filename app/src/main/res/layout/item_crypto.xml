@@ -17,10 +17,11 @@
         app:layout_constraintCircleRadius="@dimen/margin_8">
 
         <RelativeLayout
+            android:layout_margin="@dimen/margin_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dip">
+            android:padding="@dimen/margin_4">
 
 
             <TextView
@@ -28,12 +29,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Large" />
+                android:textAppearance="@android:style/TextAppearance.Medium" />
 
             <TextView
                 android:id="@+id/symbol"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/margin_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@id/name" />
 
@@ -43,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Medium" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
             <TextView
                 android:id="@+id/marketCap"
@@ -51,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/price"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Medium" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
             <TextView
                 android:id="@+id/percentChange24h"
@@ -59,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/marketCap"
                 android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Medium" />
+                android:textAppearance="@android:style/TextAppearance.Small" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>
