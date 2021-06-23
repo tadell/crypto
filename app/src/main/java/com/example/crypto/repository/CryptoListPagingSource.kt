@@ -36,6 +36,7 @@ class CryptoListPagingSource(
                     val data = response.body()?.data ?: emptyList()
                     responseData.addAll(data)
                 }
+
             }
             return LoadResult.Page(
                 data = responseData,

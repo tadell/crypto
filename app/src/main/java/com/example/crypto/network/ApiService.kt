@@ -11,7 +11,6 @@ interface ApiService {
 
     //https://pro.coinmarketcap.com/api/v1#section/Quick-Start-Guide
 //    @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")//own
-    @Headers("X-CMC_PRO_API_KEY: 3069b872-06b0-40f1-bf44-5a3f7f73d796")
     @GET("v1/cryptocurrency/listings/latest?")
     suspend fun getCryptoList(
         @Query("start") start: String,
@@ -24,7 +23,6 @@ interface ApiService {
             : Response<CryptoList>
 
     //    @Headers("X-CMC_PRO_API_KEY: aec338c7-932e-464d-be06-a062bf0b4e87")
-    @Headers("X-CMC_PRO_API_KEY: 3069b872-06b0-40f1-bf44-5a3f7f73d796")
     @GET("v1/cryptocurrency/info?")
     suspend fun getCryptoInfoDetail(@Query("id") id: String)
             : Response<DetailResponse>
