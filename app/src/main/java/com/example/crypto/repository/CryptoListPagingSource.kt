@@ -1,10 +1,7 @@
 package com.example.crypto.repository
 
-
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import com.example.crypto.model.Data
-import com.example.crypto.model.enums.SortType
 import com.example.crypto.network.ApiClient
 import com.example.crypto.network.ApiService
 
@@ -15,8 +12,7 @@ class CryptoListPagingSource(
     private val cryptoText: String,
     private val tagText: String
 ) : PagingSource<Int, Data>() {
-    var responseData = mutableListOf<Data>()
-    var listData = MutableLiveData<List<Data>>()
+    private var responseData = mutableListOf<Data>()
     private val apiService = ApiClient.getClient().create(ApiService::class.java)
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
         try {
@@ -29,17 +25,23 @@ class CryptoListPagingSource(
                 cryptoText,
                 tagText
             )
-            responseData = mutableListOf<Data>()
-            val data = response.body()?.data ?: emptyList()
-            responseData.addAll(data)
+            val prevKey =
+                if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
+            val nextKey =
+                if (response.body()?.data?.isEmpty() == true) null else currentLoadingPageKey.plus(1)
 
-            val prevKey = if (currentLoadingPageKey == 1) null else currentLoadingPageKey - 1
-
+            when {
+                response.isSuccessful -> {
+                    responseData = mutableListOf()
+                    val data = response.body()?.data ?: emptyList()
+                    responseData.addAll(data)
+                }
+            }
             return LoadResult.Page(
                 data = responseData,
                 prevKey = prevKey,
-                nextKey = currentLoadingPageKey.plus(1)
-            )
+                nextKey = nextKey)
+
         } catch (e: Exception) {
             return LoadResult.Error(e)
         }
