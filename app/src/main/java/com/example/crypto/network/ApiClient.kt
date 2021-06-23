@@ -43,10 +43,4 @@ class ApiClient {
         }
     }
 
-    private fun OkHttpClient.Builder.setApiKey() = addInterceptor { chain ->
-        val request = chain.request().newBuilder()
-            .header("Accept", "application/json")
-            .addHeader("X-CMC_PRO_API_KEY", "3069b872-06b0-40f1-bf44-5a3f7f73d796")
-        chain.proceed(request.build())
-    }
 }
