@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.crypto.AppController.Companion.public_crypto_text
 import com.example.crypto.AppController.Companion.public_sort_text
 import com.example.crypto.AppController.Companion.public_tag_text
@@ -29,6 +33,11 @@ import java.util.*
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
+
+    companion object {
+        private const val START_POSITION = 0
+    }
+
     lateinit var cryptoListAdapter: CryptoListAdapter
     private var sort: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -42,18 +51,16 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private var tagCheckedId = 0
     private var isDirAsc = false
 
-
     override fun layout(): Int = R.layout.fragment_list
-
 
     override val viewModel: CryptoListViewModel by viewModel()
     override fun init() {
         setupOnCLicks()
         setupList()
-        setupView()
-
+        initData()
+        initAdapter()
+        bindEvents()
     }
-
 
     private fun setupOnCLicks() {
         binding.btnSort.setOnClickListener { showSortBottomSheetDialog() }
@@ -71,7 +78,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
             isDirAsc = true
             sortDirText = SortDirection.ASC.toString().toLowerCase(Locale.ROOT)
         }
-        setupView()
+        initData()
     }
 
     private fun showSortBottomSheetDialog() {
@@ -83,7 +90,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         bottomSheetDialog?.setOnDismissListener {
             if (public_sort_text != sortText) {
                 public_sort_text = sortText
-                setupView()
+                initData()
                 cryptoListAdapter.notifyDataSetChanged()
             }
         }
@@ -102,7 +109,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
             if (public_tag_text != tagText || public_crypto_text != cryptoTypeText) {
                 public_tag_text = tagText
                 public_crypto_text = cryptoTypeText
-                setupView()
+                initData()
                 cryptoListAdapter.notifyDataSetChanged()
             }
         }
@@ -161,10 +168,10 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     }
 
 
-    private fun setupView() {
+    private fun initData() {
         viewLifecycleOwner.lifecycleScope.launch {
             this@ListFragment.context?.let {
-                viewModel.getCryptoList(it,sortText, sortDirText, cryptoTypeText, tagText)
+                viewModel.getCryptoList(it, sortText, sortDirText, cryptoTypeText, tagText)
                     .observe(viewLifecycleOwner, {
                         cryptoListAdapter.submitData(lifecycle, it)
                     })
@@ -175,6 +182,8 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     }
 
     private fun setupList() {
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
         cryptoListAdapter = CryptoListAdapter(object : CryptoListAdapter.SetOnCryptoClick {
             override fun onCryptoClick(id: Int) {
                 val bundle = Bundle()
@@ -189,4 +198,64 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         binding.rvCryptoList.layoutManager = linearLayoutManager
     }
 
+    private fun bindEvents() {
+        with(binding) {
+            rvCryptoList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                    val scrollPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    refreshLayout.isEnabled = scrollPosition == START_POSITION
+                }
+            })
+
+            refreshLayout.setOnRefreshListener {
+                cryptoListAdapter.refresh()
+            }
+
+            btnRetry.setOnClickListener {
+                cryptoListAdapter.retry()
+            }
+        }
+    }
+
+    private fun initAdapter() {
+        cryptoListAdapter.addLoadStateListener { loadState ->
+            // show empty list
+            val isListEmpty =
+                loadState.refresh is LoadState.NotLoading && cryptoListAdapter.itemCount == 0
+            binding.tvNoResults.isVisible = isListEmpty
+
+            // Only show the list if refresh succeeds.
+            binding.rvCryptoList.isVisible = loadState.source.refresh is LoadState.NotLoading
+
+            // Show loading spinner during initial load or refresh.
+            handleLoading(loadState.source.refresh is LoadState.Loading)
+
+            // Show the retry state if initial load or refresh fails.
+            binding.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+
+            /**
+             * loadState.refresh - represents the load state for loading the PagingData for the first time.
+             * loadState.prepend - represents the load state for loading data at the start of the list.
+             * loadState.append - represents the load state for loading data at the end of the list.
+             * */
+            // If we have an error, show a toast
+            val errorState = when {
+                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                else -> null
+            }
+            errorState?.let {
+                showToastMessage(it.error.message.toString())
+            }
+        }
+    }
+
+    private fun handleLoading(loading: Boolean) {
+        with(binding) {
+            refreshLayout.isRefreshing = loading == true
+        }
+    }
 }

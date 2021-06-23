@@ -85,6 +85,8 @@ dependencies {
 
     implementation 'androidx.multidex:multidex: 2.0.1'
 
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'

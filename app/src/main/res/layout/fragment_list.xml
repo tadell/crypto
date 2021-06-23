@@ -9,52 +9,101 @@
             type="com.example.crypto.view.cryptoList.CryptoListViewModel" />
     </data>
 
-    <RelativeLayout
-        android:background="@color/teal_700"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".view.cryptoList.ListFragment">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_marginTop="@dimen/margin_8"
-            android:id="@+id/rl_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-          >
-
-            <ImageButton
-                android:id="@+id/imgbtn_sort_dir"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/fab_margin"
-                android:background="@drawable/sort_dsc" />
-
-            <Button
-                android:id="@+id/btn_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fab_margin"
-                android:layout_toEndOf="@id/imgbtn_sort_dir"
-                android:text="@string/sort_string" />
-
-            <Button
-                android:id="@+id/btn_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/fab_margin"
-                android:text="@string/filter_string" />
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_crypto_list"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rl_top"
-            android:layout_marginTop="@dimen/margin_8"
-            android:scrollbars="vertical" />
-    </RelativeLayout>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_100"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:id="@+id/rl_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageButton
+                        android:id="@+id/imgbtn_sort_dir"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/fab_margin"
+                        android:background="@drawable/sort_dsc" />
+
+                    <Button
+                        android:id="@+id/btn_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fab_margin"
+                        android:layout_toEndOf="@id/imgbtn_sort_dir"
+                        android:text="@string/sort_string" />
+
+                    <Button
+                        android:id="@+id/btn_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:text="@string/filter_string" />
+                </RelativeLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_crypto_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="vertical"
+                        app:layoutManager="LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_crypto" />
+
+                    <TextView
+                        android:id="@+id/tv_no_results"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/no_results"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_retry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/retry"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
