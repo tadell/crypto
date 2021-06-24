@@ -25,5 +25,8 @@
     <string name="filter_string">Filter</string>
     <string name="no_results">No Results</string>
     <string name="retry">retry</string>
+    <string name="price_$">Price : $</string>
+    <string name="percent_change_$">Percent Change 24h : $</string>
+    <string name="market_cap_$">Market Cap : $</string>
 
 </resources>

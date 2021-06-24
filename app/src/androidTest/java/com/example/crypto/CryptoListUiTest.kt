@@ -7,8 +7,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
 import com.example.crypto.helper.OkHttpProvider
 import com.example.crypto.model.test.CommonTestDataUtil
 import com.example.crypto.view.MainActivity
@@ -56,14 +54,12 @@ class CryptoListUiTest {
             )
         testScenario = ActivityScenario.launch(startIntent)
         check_friends_list_click()
-
     }
 
 
     private fun check_friends_list_click() {
         onView(withId(R.id.rv_crypto_list))
             .check(matches(isDisplayed()))
-
     }
 
     @After

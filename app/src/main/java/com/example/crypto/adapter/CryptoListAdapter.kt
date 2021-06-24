@@ -3,7 +3,6 @@ package com.example.crypto.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
@@ -12,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.crypto.R
 import com.example.crypto.databinding.ItemCryptoBinding
 import com.example.crypto.model.Data
-import java.text.NumberFormat
-import java.util.*
 
 
 class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
@@ -35,23 +32,26 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
     class MyViewHolder(private val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: Data) {
             binding.item = item
             binding.name.text = item.name
             binding.symbol.text = item.symbol
-            binding.price.text = "Price : $" + String.format("%,f", item.quote?.usd?.price)
-            binding.percentChange24h.text = "Percent Change 24h : $" +
+            binding.price.text ={R.string.`price_$`}.toString()+String.format("%,f", item.quote?.usd?.price)
+            binding.percentChange24h.text = {R.string.`percent_change_$`}.toString() +
                     String.format("%,f", item.quote?.usd?.percentChange24h)
-            binding.marketCap.text = "Market Cap : $" +
+            binding.marketCap.text = {R.string.`market_cap_$`}.toString()+
                     String.format(
                         "%,f", item.quote?.usd?.marketCap
                     )
 
-            binding.cardCrypto.setOnClickListener(View.OnClickListener{ item.id?.toInt()?.let { it1 ->
-                setOnCryptoClickListener?.onCryptoClick(
-                    it1
-                )
-            } })
+            binding.cardCrypto.setOnClickListener {
+                item.id?.let { it1 ->
+                    setOnCryptoClickListener?.onCryptoClick(
+                        it1
+                    )
+                }
+            }
             binding.executePendingBindings()
         }
     }
@@ -66,9 +66,13 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
             return oldItem == newItem
         }
     }
+
     companion object {
         var setOnCryptoClickListener: SetOnCryptoClick? = null
     }
+
+    //interface for item click
+
     interface SetOnCryptoClick {
         fun onCryptoClick(id: Int)
     }

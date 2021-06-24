@@ -4,6 +4,9 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
+
+//created for json response reading for ui test
+
 object FileReader {
     @Throws(IOException::class)
     fun readStringFromFile(jsonFileName: String): String {

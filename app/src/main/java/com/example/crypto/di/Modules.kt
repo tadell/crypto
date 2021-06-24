@@ -9,6 +9,8 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 
+//viewmodels and their repositories module created for injection by koin
+
 val detailRepoModule = module {
     factory { DetailRepository() }
 }

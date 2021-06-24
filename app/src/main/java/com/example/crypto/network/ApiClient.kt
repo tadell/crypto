@@ -1,5 +1,9 @@
 package com.example.crypto.network
 
+import com.example.crypto.helper.Constants.Companion.API_KEY
+import com.example.crypto.helper.Constants.Companion.API_KEY_VALUE
+import com.example.crypto.helper.Constants.Companion.HEADER_KEY
+import com.example.crypto.helper.Constants.Companion.HEADER_KEY_VALUE
 import com.example.crypto.network.ApiEndPoint.BASE_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -14,10 +18,11 @@ class ApiClient {
             this.level = HttpLoggingInterceptor.Level.BODY
         }
 
+        //header
         private fun OkHttpClient.Builder.setApiKey() = addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .header("Accept", "application/json")
-                .addHeader("X-CMC_PRO_API_KEY", "aec338c7-932e-464d-be06-a062bf0b4e87")
+                .header(HEADER_KEY, HEADER_KEY_VALUE)
+                .addHeader(API_KEY, API_KEY_VALUE)
             chain.proceed(request.build())
         }
 
