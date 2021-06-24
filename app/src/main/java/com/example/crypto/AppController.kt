@@ -18,8 +18,8 @@ open class AppController : Application() {
             androidContext(this@AppController)
             // declare modules
             modules(
-                myModule,
-                repoModule,
+                detailRepoModule,
+                cryptoRepoModule,
                 detailViewModelModule,
                 cryptoListViewModelModule
             )

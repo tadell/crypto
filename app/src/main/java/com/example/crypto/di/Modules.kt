@@ -9,11 +9,11 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 
-val myModule = module {
+val detailRepoModule = module {
     factory { DetailRepository() }
 }
 
-val repoModule = module {
+val cryptoRepoModule = module {
     single<CryptoListRepository> { CryptoRepositoryImpl() }
 }
 

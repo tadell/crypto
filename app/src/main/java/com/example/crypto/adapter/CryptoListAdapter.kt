@@ -5,9 +5,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.crypto.R
 import com.example.crypto.databinding.ItemCryptoBinding
 import com.example.crypto.model.Data
 import java.text.NumberFormat
@@ -26,6 +28,8 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         setOnCryptoClickListener = setOnCryptoClick
         getItem(position)?.let { holder.bind(it) }
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.translate_alpha_anim)
     }
 
     class MyViewHolder(private val binding: ItemCryptoBinding) :
@@ -43,11 +47,13 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
                         "%,f", item.quote?.usd?.marketCap
                     )
 
-            binding.cardCrypto.setOnClickListener(View.OnClickListener{ item.id?.toInt()?.let { it1 ->
-                setOnCryptoClickListener?.onCryptoClick(
-                    it1
-                )
-            } })
+            binding.cardCrypto.setOnClickListener(View.OnClickListener {
+                item.id?.toInt()?.let { it1 ->
+                    setOnCryptoClickListener?.onCryptoClick(
+                        it1
+                    )
+                }
+            })
             binding.executePendingBindings()
         }
     }
@@ -62,9 +68,11 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
             return oldItem == newItem
         }
     }
+
     companion object {
         var setOnCryptoClickListener: SetOnCryptoClick? = null
     }
+
     interface SetOnCryptoClick {
         fun onCryptoClick(id: Int)
     }
