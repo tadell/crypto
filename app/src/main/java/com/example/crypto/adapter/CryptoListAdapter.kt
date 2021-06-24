@@ -47,13 +47,11 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
                         "%,f", item.quote?.usd?.marketCap
                     )
 
-            binding.cardCrypto.setOnClickListener(View.OnClickListener {
-                item.id?.toInt()?.let { it1 ->
-                    setOnCryptoClickListener?.onCryptoClick(
-                        it1
-                    )
-                }
-            })
+            binding.cardCrypto.setOnClickListener(View.OnClickListener{ item.id?.toInt()?.let { it1 ->
+                setOnCryptoClickListener?.onCryptoClick(
+                    it1
+                )
+            } })
             binding.executePendingBindings()
         }
     }
@@ -68,11 +66,9 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
             return oldItem == newItem
         }
     }
-
     companion object {
         var setOnCryptoClickListener: SetOnCryptoClick? = null
     }
-
     interface SetOnCryptoClick {
         fun onCryptoClick(id: Int)
     }

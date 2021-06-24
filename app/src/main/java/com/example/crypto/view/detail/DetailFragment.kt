@@ -38,9 +38,7 @@ class DetailFragment : Fragment() {
             val id = requireArguments().getInt("id")
             getDetailData(id)
             setupView()
-
         }
-
     }
 
     private fun getDetailData(id: Int) {
