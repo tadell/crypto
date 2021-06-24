@@ -12,7 +12,10 @@ import java.util.*
 open class AppController : Application() {
     override fun onCreate() {
         super.onCreate()
+        initKoin()
+    }
 
+    private fun initKoin() {
         startKoin {
             // declare used Android context
             androidContext(this@AppController)
@@ -26,10 +29,4 @@ open class AppController : Application() {
         }
     }
 
-    companion object {
-        @JvmField
-        var public_sort_text: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
-        var public_tag_text: String = TagType.ALL.toString().toLowerCase(Locale.ROOT)
-        var public_crypto_text: String = CryptoType.ALL.toString().toLowerCase(Locale.ROOT)
-    }
 }

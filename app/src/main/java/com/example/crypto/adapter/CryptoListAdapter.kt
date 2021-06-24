@@ -37,10 +37,10 @@ class CryptoListAdapter(private val setOnCryptoClick: SetOnCryptoClick) :
             binding.item = item
             binding.name.text = item.name
             binding.symbol.text = item.symbol
-            binding.price.text ={R.string.`price_$`}.toString()+String.format("%,f", item.quote?.usd?.price)
-            binding.percentChange24h.text = {R.string.`percent_change_$`}.toString() +
+            binding.price.text = "Price : $" + String.format("%,f", item.quote?.usd?.price)
+            binding.percentChange24h.text = "Percent Change 24h : $" +
                     String.format("%,f", item.quote?.usd?.percentChange24h)
-            binding.marketCap.text = {R.string.`market_cap_$`}.toString()+
+            binding.marketCap.text = "Market Cap : $" +
                     String.format(
                         "%,f", item.quote?.usd?.marketCap
                     )

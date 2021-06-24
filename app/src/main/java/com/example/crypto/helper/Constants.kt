@@ -1,5 +1,10 @@
 package com.example.crypto.helper
 
+import com.example.crypto.model.enums.CryptoType
+import com.example.crypto.model.enums.SortType
+import com.example.crypto.model.enums.TagType
+import java.util.*
+
 class Constants {
 
     companion object {
@@ -10,5 +15,16 @@ class Constants {
 
         const val HEADER_KEY: String = "Accept"
         const val HEADER_KEY_VALUE: String = "application/json"
+
+        //timeout amount of api calls
+        const val  TIMEOUT_VALUE: Long = 30
+
+        //amount of cryptocurrencies items loading in each page
+        const val  PAGE_SIZE: String = "20"
+
+
+        var public_sort_text: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
+        var public_tag_text: String = TagType.ALL.toString().toLowerCase(Locale.ROOT)
+        var public_crypto_text: String = CryptoType.ALL.toString().toLowerCase(Locale.ROOT)
     }
 }

@@ -25,8 +25,11 @@
     <string name="filter_string">Filter</string>
     <string name="no_results">No Results</string>
     <string name="retry">retry</string>
-    <string name="price_$">Price : $</string>
-    <string name="percent_change_$">Percent Change 24h : $</string>
-    <string name="market_cap_$">Market Cap : $</string>
+    <string name="Bad_Request_string">Bad Request</string>
+    <string name="Unauthorized_string">Unauthorized</string>
+    <string name="Payment_Required_string">Payment Required</string>
+    <string name="Forbidden_string">Forbidden</string>
+    <string name="Too_Many_Requests_string">Too Many Requests</string>
+    <string name="Internal_Server_Error_string">Internal Server Error</string>
 
 </resources>

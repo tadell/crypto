@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 
+//base fragment of the fragments of the app for avoid writing some repeated codes
 abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : Fragment() {
     protected abstract val viewModel: ViewModel
     protected lateinit var binding: Binding

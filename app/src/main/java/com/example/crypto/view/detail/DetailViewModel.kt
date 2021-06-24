@@ -1,12 +1,12 @@
 package com.example.crypto.view.detail
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.crypto.model.InfoData
 import com.example.crypto.repository.DetailRepository
+import com.example.crypto.view.base.BaseViewModel
 import kotlinx.coroutines.*
 
-class DetailViewModel() : ViewModel(), CoroutineScope by MainScope() {
+class DetailViewModel() : BaseViewModel(), CoroutineScope by MainScope() {
     val detailData = MutableLiveData<InfoData>()
     var job: Job? = null
     val loading = MutableLiveData<Boolean>()

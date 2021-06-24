@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.crypto.AppController.Companion.public_crypto_text
-import com.example.crypto.AppController.Companion.public_sort_text
-import com.example.crypto.AppController.Companion.public_tag_text
 import com.example.crypto.R
 import com.example.crypto.adapter.CryptoListAdapter
 import com.example.crypto.databinding.FragmentListBinding
+import com.example.crypto.helper.Constants.Companion.public_crypto_text
+import com.example.crypto.helper.Constants.Companion.public_sort_text
+import com.example.crypto.helper.Constants.Companion.public_tag_text
 import com.example.crypto.model.enums.CryptoType
 import com.example.crypto.model.enums.SortDirection
 import com.example.crypto.model.enums.SortType
@@ -38,6 +37,9 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         private const val START_POSITION = 0
     }
 
+    override fun layout(): Int = R.layout.fragment_list
+    override val viewModel: CryptoListViewModel by viewModel()
+
     lateinit var cryptoListAdapter: CryptoListAdapter
     private var sort: String = SortType.MARKET_CAP.toString().toLowerCase(Locale.ROOT)
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -51,9 +53,6 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     private var tagCheckedId = 0
     private var isDirAsc = false
 
-    override fun layout(): Int = R.layout.fragment_list
-
-    override val viewModel: CryptoListViewModel by viewModel()
     override fun init() {
         setupOnCLicks()
         setupList()
@@ -68,6 +67,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         binding.imgbtnSortDir.setOnClickListener { setSortDirBtn() }
     }
 
+    //for sorting the direction of the list
     private fun setSortDirBtn() {
         if (isDirAsc) {
             binding.imgbtnSortDir.setBackgroundResource(R.drawable.sort_dsc)
@@ -168,6 +168,7 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
     }
 
 
+    //implement coroutine and crypto viewmodel initialization
     private fun initData() {
         viewLifecycleOwner.lifecycleScope.launch {
             this@ListFragment.context?.let {
@@ -178,12 +179,11 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
             }
         }
 
-
     }
 
-    private fun setupList() {
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
 
+    //set list adapter
+    private fun setupList() {
         cryptoListAdapter = CryptoListAdapter(object : CryptoListAdapter.SetOnCryptoClick {
             override fun onCryptoClick(id: Int) {
                 val bundle = Bundle()
@@ -198,11 +198,11 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         binding.rvCryptoList.layoutManager = linearLayoutManager
     }
 
+    //handling  list scroll, swiperefresh and retry button events
     private fun bindEvents() {
         with(binding) {
             rvCryptoList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-
                     val scrollPosition =
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     refreshLayout.isEnabled = scrollPosition == START_POSITION
@@ -219,6 +219,8 @@ class ListFragment : BaseFragment<FragmentListBinding, CryptoListViewModel>() {
         }
     }
 
+
+    //handling  list loading states and errors
     private fun initAdapter() {
         cryptoListAdapter.addLoadStateListener { loadState ->
             // show empty list

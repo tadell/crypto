@@ -4,6 +4,7 @@ import com.example.crypto.helper.Constants.Companion.API_KEY
 import com.example.crypto.helper.Constants.Companion.API_KEY_VALUE
 import com.example.crypto.helper.Constants.Companion.HEADER_KEY
 import com.example.crypto.helper.Constants.Companion.HEADER_KEY_VALUE
+import com.example.crypto.helper.Constants.Companion.TIMEOUT_VALUE
 import com.example.crypto.network.ApiEndPoint.BASE_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -28,9 +29,9 @@ class ApiClient {
 
         private val okHttpClient = OkHttpClient.Builder()
             .setApiKey()
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT_VALUE, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT_VALUE, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT_VALUE, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
             .build()
